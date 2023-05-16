@@ -8,6 +8,6 @@ public class SpenseController {
     
     @RequestMapping("/hello")
     public String hello() {
-        return "Hello Qin Yong!";
+        return "Hello Qin Yong!!!";
     }
 }
