@@ -1,4 +1,4 @@
-package com.backend.sp.classes;
+package com.spense_be.spense.classes;
 
 import org.springframework.data.annotation.Id;
 
