@@ -12,6 +12,7 @@ import com.backend.sp.classes.Todo;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -37,6 +38,9 @@ public class SpController {
         todo.setDone(resultSet.getBoolean("done"));
         return todo.toString();
     }
+
+    @RequestMapping("/login/{ans}")
+    @ResponseBody
 
     public ResultSet runDatabaseQuery(String queryString) throws SQLException {
         Properties properties = new Properties();
