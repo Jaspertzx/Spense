@@ -11,6 +11,7 @@ import java.util.Properties;
 import com.spense_be.spense.classes.Todo;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,8 +40,11 @@ public class SpenseController {
         return todo.toString();
     }
 
-    @RequestMapping("/login/{ans}")
+    @RequestMapping("/login/{s}/{p}")
     @ResponseBody
+    public String login(@PathVariable("s") String username, @PathVariable("p") String password) {
+        return username + password;
+    }
 
     public ResultSet runDatabaseQuery(String queryString) throws SQLException {
         Properties properties = new Properties();
