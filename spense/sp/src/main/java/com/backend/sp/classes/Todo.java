@@ -22,4 +22,25 @@ public class Todo {
 
     private boolean done;
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    @Override
+    public String toString() {
+        return this.details.toString();
+    }
+
 }
