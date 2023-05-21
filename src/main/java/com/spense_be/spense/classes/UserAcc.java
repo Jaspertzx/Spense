@@ -34,6 +34,22 @@ public class UserAcc {
         return this.salt;
     }
 
+    public String retrievePassword() {
+        return this.password;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public int getMobilePhone() {
+        return this.mobilePhone;
+    }
+
     public boolean checkPassword(String hashed) {
         if (this.password.equals(hashed)) {
             return true;

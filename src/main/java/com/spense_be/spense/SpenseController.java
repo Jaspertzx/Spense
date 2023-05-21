@@ -25,6 +25,8 @@ import com.spense_be.spense.classes.UserAcc;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -80,6 +82,21 @@ public class SpenseController {
         String dbCheck = "SET NOCOUNT ON INSERT INTO Users (username, password, email, mobilePhone, date, salt) VALUES ('"
                 + username
                 + "', '" + hashedPassword + "', '" + email + "', " + phoneNum + ", " + time + ", '" + base64Encode(salt)
+                + "');";
+        ResultSet rs = runDatabaseQuery(dbCheck);
+        return "created";
+    }
+
+    @PostMapping("/signUpRequest")
+    public String signUpRequest(@RequestBody UserAcc ua)
+            throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
+        long time = Instant.now().getEpochSecond();
+        byte[] salt = getSalt();
+        String hashedPassword = getHashedPassword(ua.retrievePassword(), salt);
+        String dbCheck = "SET NOCOUNT ON INSERT INTO Users (username, password, email, mobilePhone, date, salt) VALUES ('"
+                + ua.getUsername()
+                + "', '" + hashedPassword + "', '" + ua.getEmail() + "', " + ua.getMobilePhone() + ", " + time + ", '"
+                + base64Encode(salt)
                 + "');";
         ResultSet rs = runDatabaseQuery(dbCheck);
         return "created";
