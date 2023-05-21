@@ -1,6 +1,10 @@
 package com.spense_be.spense;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,10 +12,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 import com.spense_be.spense.classes.Todo;
+import com.spense_be.spense.classes.UserAcc;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,25 +52,37 @@ public class SpenseController {
 
     @RequestMapping("/login/{s}/{p}")
     @ResponseBody
-    public Boolean login(@PathVariable("s") String username, @PathVariable("p") String password) throws SQLException {
-        String dbCheck = "SELECT * FROM Users WHERE username ='" + username + "' AND password ='" + password + "';";
+    public Boolean login(@PathVariable("s") String username, @PathVariable("p") String password)
+            throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
+        String dbCheck = "SELECT * FROM Users WHERE username ='" + username + "'";
         ResultSet rs = runDatabaseQuery(dbCheck);
+        UserAcc ua = null;
         while (rs.next()) {
-            return true;
+            ua = new UserAcc(rs.getLong("id"), rs.getString("username"), rs.getString("password"),
+                    rs.getString("email"),
+                    rs.getInt("mobilePhone"), rs.getInt("date"), rs.getString("salt"));
+            String hp = getHashedPassword(password, base64Decode(ua.retrieveSalt()));
+            if (ua.checkPassword(hp)) {
+                return true;
+            }
         }
         return false;
     }
 
     @RequestMapping("/signup/{u}/{p}/{e}/{m}")
     @ResponseBody
-    public Boolean signUp(@PathVariable("u") String username, @PathVariable("p") String password,
-            @PathVariable("e") String email, @PathVariable("m") int phoneNum) throws SQLException {
+    public String signUp(@PathVariable("u") String username, @PathVariable("p") String password,
+            @PathVariable("e") String email, @PathVariable("m") int phoneNum)
+            throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
         long time = Instant.now().getEpochSecond();
-        String salt = "salt";
-        String dbCheck = "INSERT INTO Users (username, password, email, mobilePhone, date, salt) VALUES ('" + username
-                + "', '" + password + "', '" + email + "', " + phoneNum + ", " + time + ", '" + salt + "');";
-        runDatabaseQuery(dbCheck);
-        return true;
+        byte[] salt = getSalt();
+        String hashedPassword = getHashedPassword(password, salt);
+        String dbCheck = "SET NOCOUNT ON INSERT INTO Users (username, password, email, mobilePhone, date, salt) VALUES ('"
+                + username
+                + "', '" + hashedPassword + "', '" + email + "', " + phoneNum + ", " + time + ", '" + base64Encode(salt)
+                + "');";
+        ResultSet rs = runDatabaseQuery(dbCheck);
+        return "created";
     }
 
     public ResultSet runDatabaseQuery(String queryString) throws SQLException {
@@ -73,5 +95,28 @@ public class SpenseController {
         Connection connection = DriverManager.getConnection(properties.getProperty("url"), properties);
         PreparedStatement readStatement = connection.prepareStatement(queryString);
         return readStatement.executeQuery();
+    }
+
+    private static String getHashedPassword(String rawPassword, byte[] salt)
+            throws NoSuchAlgorithmException, InvalidKeySpecException {
+        KeySpec spec = new PBEKeySpec(rawPassword.toCharArray(), salt, 65536, 128);
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        byte[] hash = factory.generateSecret(spec).getEncoded();
+        return base64Encode(hash);
+    }
+
+    private static byte[] getSalt() {
+        Random r = new SecureRandom();
+        byte[] saltBytes = new byte[32];
+        r.nextBytes(saltBytes);
+        return saltBytes;
+    }
+
+    private static String base64Encode(byte[] src) {
+        return Base64.getEncoder().encodeToString(src);
+    }
+
+    private static byte[] base64Decode(String src) {
+        return Base64.getDecoder().decode(src);
     }
 }

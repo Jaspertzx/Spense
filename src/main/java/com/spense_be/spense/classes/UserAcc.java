@@ -29,4 +29,15 @@ public class UserAcc {
     private int dateJoined;
 
     private String salt;
+
+    public String retrieveSalt() {
+        return this.salt;
+    }
+
+    public boolean checkPassword(String hashed) {
+        if (this.password.equals(hashed)) {
+            return true;
+        }
+        return false;
+    }
 }
