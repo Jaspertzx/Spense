@@ -36,7 +36,7 @@ public class SpenseController {
 
     @RequestMapping("/hello")
     public String hello() {
-        return "Hello11";
+        return "Hello12";
     }
 
     // Get all Users
@@ -64,6 +64,25 @@ public class SpenseController {
                     rs.getString("email"),
                     rs.getInt("mobilePhone"), rs.getInt("date"), rs.getString("salt"));
             String hp = getHashedPassword(password, base64Decode(ua.retrieveSalt()));
+            if (ua.checkPassword(hp)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @PostMapping("/loginRequest")
+    @ResponseBody
+    public Boolean loginRequest(@RequestBody UserAcc u)
+            throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
+        String dbCheck = "SELECT * FROM Users WHERE username ='" + u.getUsername() + "'";
+        ResultSet rs = runDatabaseQuery(dbCheck);
+        UserAcc ua = null;
+        while (rs.next()) {
+            ua = new UserAcc(rs.getLong("id"), rs.getString("username"), rs.getString("password"),
+                    rs.getString("email"),
+                    rs.getInt("mobilePhone"), rs.getInt("date"), rs.getString("salt"));
+            String hp = getHashedPassword(u.retrievePassword(), base64Decode(ua.retrieveSalt()));
             if (ua.checkPassword(hp)) {
                 return true;
             }
