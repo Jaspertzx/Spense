@@ -13,7 +13,7 @@ public class Business {
     // Ngee Ann City
     private Outlets[] outlets;
 
-    private Staff staff;
+    private Staff[] staff;
 
     private Misc misc;
 }
