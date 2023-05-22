@@ -7,4 +7,10 @@ public class Receipts {
     private String id;
 
     private int date;
+
+    private Items[] items;
+
+    private Business business;
+
+    private Staff staff;
 }
