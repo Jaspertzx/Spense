@@ -10,7 +10,15 @@ public class Receipts {
 
     private Items[] items;
 
+    private double price;
+
+    private double discount;
+
+    private String paymentMethod;
+
     private Business business;
 
-    private Staff staff;
+    private String staffName;
+
+    private Warranty warranty;
 }
