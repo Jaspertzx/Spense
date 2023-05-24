@@ -14,4 +14,8 @@ public class Business {
     private Outlets[] outlets;
 
     private Misc misc;
+
+    public String getName() {
+        return this.name;
+    }
 }
