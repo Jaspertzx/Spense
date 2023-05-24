@@ -1,5 +1,6 @@
 package com.spense_be.spense;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +24,8 @@ public class SpenseAPIExternalController {
     @RequestMapping("/createBusinessAcc")
     @ResponseBody
     public String createBusinessAcc(@RequestBody Business ua) throws SQLException {
-
-        return "Creating: " + ua.getName();
+        ResultSet resultSet = server.query("SELECT * FROM USERS;");
+        return "Creating: " + resultSet.next();
     }
 
 }
