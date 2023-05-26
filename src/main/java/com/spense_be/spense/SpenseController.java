@@ -21,7 +21,7 @@ public class SpenseController {
 
     @RequestMapping("/hello")
     public String hello() {
-        return "Hello20";
+        return "Hello23";
     }
 
     // Get all Users

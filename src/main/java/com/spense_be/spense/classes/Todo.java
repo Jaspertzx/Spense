@@ -42,5 +42,4 @@ public class Todo {
     public String toString() {
         return this.details.toString();
     }
-
 }
