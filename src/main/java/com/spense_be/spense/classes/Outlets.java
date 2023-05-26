@@ -13,5 +13,4 @@ public class Outlets {
     private String openingHours;
     // 10pm
     private String closeHours;
-
 }

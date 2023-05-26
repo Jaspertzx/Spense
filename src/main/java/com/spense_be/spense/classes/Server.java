@@ -14,16 +14,17 @@ import com.spense_be.spense.SpenseController;
 public class Server {
 
     private Connection connection;
-    private Properties properties;
+    private Properties properties = new Properties();
 
     public Server() {
         try {
             this.properties.load(SpenseController.class.getClassLoader().getResourceAsStream("app.properties"));
             this.connection = DriverManager.getConnection(properties.getProperty("url"), properties);
         } catch (IOException e) {
+            // perhaps add server call?
             e.printStackTrace();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
+            // perhaps add server call as well?
             e.printStackTrace();
         }
     }
