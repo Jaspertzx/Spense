@@ -29,8 +29,7 @@ public class SpenseAPIExternalController {
     @RequestMapping("/createBusinessAcc")
     @ResponseBody
     public String createBusinessAcc(@RequestBody Business ua) throws SQLException, JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return "Creating: " + objectMapper.writeValueAsString(ua);
+        return "Creating: " + ua.getName();
     }
 
 }

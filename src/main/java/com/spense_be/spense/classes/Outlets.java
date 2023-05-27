@@ -6,7 +6,7 @@ public class Outlets {
     @Id
     private int id;
     // 391 Ochard Road
-    private String addresser;
+    private String address;
     // outlet phonenumber
     private int phoneNumber;
     // 10am
@@ -14,10 +14,13 @@ public class Outlets {
     // 10pm
     private String closeHours;
 
-    public Outlets(String addresser) {
-        this.addresser = addresser;
+    public Outlets(String address) {
+        this.address = address;
     }
 
+    public String getAddress() {
+        return this.address;
+    }
     /*
      * @Override
      * public String toString() {
