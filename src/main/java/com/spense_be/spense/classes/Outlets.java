@@ -11,8 +11,6 @@ public class Outlets {
     private int phoneNumber;
     // 10am
     private String openingHours;
-    // 10pm
-    private String closeHours;
 
     public Outlets(String address) {
         this.address = address;

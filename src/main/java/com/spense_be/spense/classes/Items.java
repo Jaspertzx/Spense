@@ -5,6 +5,4 @@ public class Items {
     private String ID;
     private String name;
     private Double price;
-    private boolean GSTInc;
-
 }
