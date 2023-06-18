@@ -13,6 +13,19 @@ public class UserAcc {
         this.mobilePhone = mobilePhone;
         this.dateJoined = dateJoined;
         this.salt = salt;
+        this.businessMode = 0;
+    }
+
+    public UserAcc(Long id, String username, String password, String email, int mobilePhone, int dateJoined,
+            String salt, int businessMode) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.mobilePhone = mobilePhone;
+        this.dateJoined = dateJoined;
+        this.salt = salt;
+        this.businessMode = businessMode;
     }
 
     @Id
@@ -29,6 +42,8 @@ public class UserAcc {
     private int dateJoined;
 
     private String salt;
+    // 0 = users
+    private int businessMode;
 
     public String retrieveSalt() {
         return this.salt;

@@ -26,14 +26,13 @@ public class SpenseAPIExternalController {
     @RequestMapping("/pingSpense")
     public String pingSpense() {
         Outlets outlets = new Outlets("testsws");
-        Business business = new Business(outlets);
-        return "I am awake" + business.toString();
+        return "I am awake";
     }
 
     @RequestMapping("/createBusinessAcc")
     @ResponseBody
     public String createBusinessAcc(@RequestBody Business ua) throws SQLException, JsonProcessingException {
-        return "Creating: " + ua.getName();
+        return "Creating: " + ua.getBusinessName();
     }
 
     @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "HELPSERROR")

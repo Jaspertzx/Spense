@@ -6,30 +6,26 @@ import org.springframework.data.annotation.Id;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Business {
-    // autogen
-    @Id
-    private String id;
-    // ETC: Best Denki PTE LTD
-    private String name;
+public class Business extends UserAcc {
     // GST Reg No
     private String gstRegNo;
+
+    private String businessName;
     // Ngee Ann City
     private Outlets outlets;
 
     private Misc misc;
 
-    public Business(Outlets outlets) {
+    private String api;
+
+    public Business(Long id, String username, String password, String email, int mobilePhone, int dateJoined,
+            String salt, int businessMode, Outlets outlets) {
+        super(id, username, password, email, mobilePhone, dateJoined, salt, 1);
         this.outlets = outlets;
     }
 
-    public Business(String name, Outlets outlets) {
-        this.name = name;
-        this.outlets = outlets;
-    }
-
-    public String getName() {
-        return this.name;
+    public String getBusinessName() {
+        return this.businessName;
     }
 
     @JsonProperty("outlets")
