@@ -1,10 +1,8 @@
 CREATE TABLE Business
 (
-id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-username varchar(50),
-password varchar(512),
-email varchar(255),
-mobilePhone int,
-date int,
-salt varchar(512),
+id int,
+businessName varchar(512),
+gstRegNo varchar(100),
+outlets varchar(MAX),
+api varchar(512),
 );
