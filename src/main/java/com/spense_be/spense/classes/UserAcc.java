@@ -2,7 +2,22 @@ package com.spense_be.spense.classes;
 
 import org.springframework.data.annotation.Id;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UserAcc {
+
+
+    public UserAcc(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+    
+    public UserAcc(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("email") String email, @JsonProperty("mobilePhone") int mobilePhone) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.mobilePhone = mobilePhone;
+    }
 
     public UserAcc(Long id, String username, String password, String email, int mobilePhone, int dateJoined,
             String salt) {

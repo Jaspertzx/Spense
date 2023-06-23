@@ -1,6 +1,5 @@
 package com.spense_be.spense;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.http.HttpStatus;

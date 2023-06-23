@@ -33,7 +33,9 @@ public class SpenseUserController {
     public Boolean loginRequest(@RequestBody UserAcc u)
             throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
         String dbCheck = "SELECT * FROM Users WHERE username ='" + u.getUsername() + "'";
+        System.out.println("check1");
         ResultSet rs = runDatabaseQuery(dbCheck);
+        System.out.println("check2");
         UserAcc ua = null;
         while (rs.next()) {
             ua = new UserAcc(rs.getLong("id"), rs.getString("username"), rs.getString("password"),
