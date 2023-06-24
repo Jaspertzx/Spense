@@ -69,9 +69,6 @@ public class UserAcc {
         return this.id;
     }
 
-    public Long getId() {
-        return this.id;
-    }
 
     public String getUsername() {
         return this.username;
