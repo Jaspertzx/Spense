@@ -1,7 +1,5 @@
 package com.spense_be.spense.classes;
 
-import org.springframework.data.annotation.Id;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserAcc {
@@ -44,7 +42,6 @@ public class UserAcc {
         this.businessMode = businessMode;
     }
 
-    @Id
     private Long id;
 
     private String username;
