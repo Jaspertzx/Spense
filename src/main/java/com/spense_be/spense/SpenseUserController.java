@@ -84,7 +84,7 @@ public class SpenseUserController {
     // }
 
 
-    @PostMapping("/signUpRequest")
+    @PostMapping("/signUpRequest" )
     @ResponseBody
     public String signUpRequest(@RequestBody UserAcc ua)
             throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
