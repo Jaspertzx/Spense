@@ -9,7 +9,8 @@ public class UserAcc {
         this.password = password;
     }
     
-    public UserAcc(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("email") String email, @JsonProperty("mobilePhone") int mobilePhone) {
+    public UserAcc(@JsonProperty("id") Long id, @JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("email") String email, @JsonProperty("mobilePhone") int mobilePhone) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -27,7 +28,7 @@ public class UserAcc {
         this.salt = salt;
         this.businessMode = 0;
     }
-    
+
     public UserAcc(Long id, String username, String password, String email, int mobilePhone, int dateJoined,
             String salt, int businessMode) {
         this.id = id;
@@ -62,6 +63,10 @@ public class UserAcc {
 
     public String retrievePassword() {
         return this.password;
+    }
+    
+    public Long getId() {
+        return this.id;
     }
 
     public String getUsername() {

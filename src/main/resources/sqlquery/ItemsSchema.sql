@@ -3,5 +3,5 @@ CREATE TABLE items (
   businessID INT NOT NULL,
   name VARCHAR(255),
   price FLOAT,
-  PRIMARY KEY (businessID, id)
+  receiptId varchar(255)
 );
