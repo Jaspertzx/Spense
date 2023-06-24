@@ -32,6 +32,7 @@ public class SpenseUserController {
     @ResponseBody
     public Boolean loginRequest(@RequestBody UserAcc u)
             throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
+        System.out.println("check0");
         String dbCheck = "SELECT * FROM Users WHERE username ='" + u.getUsername() + "'";
         System.out.println("check1");
         ResultSet rs = runDatabaseQuery(dbCheck);
@@ -40,7 +41,7 @@ public class SpenseUserController {
         while (rs.next()) {
             ua = new UserAcc(rs.getLong("id"), rs.getString("username"), rs.getString("password"),
                     rs.getString("email"),
-                    rs.getInt("mobilePhone"), rs.getInt("date"), rs.getString("salt"));
+                    rs.getInt("mobilePhone"), rs.getInt("date"), rs.getString("salt"), 0);
             String hp = getHashedPassword(u.retrievePassword(), base64Decode(ua.retrieveSalt()));
             if (ua.checkPassword(hp)) {
                 return true;
