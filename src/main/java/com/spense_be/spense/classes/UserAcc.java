@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserAcc {
 
-    public UserAcc(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
+    // change to the biggest constructors
+    // public UserAcc(String username, String password) {
+    //     this.username = username;
+    //     this.password = password;
+    // }
     
-    public UserAcc(@JsonProperty("id") Long id, @JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("email") String email, @JsonProperty("mobilePhone") int mobilePhone) {
-        this.id = id;
+    public UserAcc(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("email") String email, @JsonProperty("mobilePhone") int mobilePhone) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -28,7 +28,7 @@ public class UserAcc {
         this.salt = salt;
         this.businessMode = 0;
     }
-
+    
     public UserAcc(Long id, String username, String password, String email, int mobilePhone, int dateJoined,
             String salt, int businessMode) {
         this.id = id;
@@ -79,6 +79,10 @@ public class UserAcc {
 
     public int getMobilePhone() {
         return this.mobilePhone;
+    }
+
+    public int getBusinessMode() {
+        return this.businessMode;
     }
 
     public boolean checkPassword(String hashed) {
