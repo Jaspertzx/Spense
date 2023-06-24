@@ -1,14 +1,24 @@
 package com.spense_be.spense.classes;
 
-import org.springframework.data.annotation.Id;
-
 public class Receipts {
-    @Id
+
+    public Receipts(String id, int date, Items[] items, double price, double discount, String paymentMethod, Business business, String staffName, Warranty warranty) {
+        this.id = id;
+        this.date = date;
+        this.items = items;
+        this.price = price;
+        this.discount = discount;
+        this.paymentMethod = paymentMethod;
+        this.business = business;
+        this.staffName = staffName;
+        this.warranty = warranty;
+    }
+
     private String id;
 
     private int date;
 
-    private Items[] items;
+    public Items[] items;
 
     private double price;
 
@@ -21,4 +31,24 @@ public class Receipts {
     private String staffName;
 
     private Warranty warranty;
+
+    public Items[] getItems() {
+        return this.items;
+    }
+
+    public double getPrice() {
+        return this.price;
+    }
+    
+    public double getDiscount() {
+        return this.discount;
+    }
+
+    public String getPaymentMethod() {
+        return this.paymentMethod;
+    }
+    
+    public String getStaffName() {
+        return this.staffName;
+    }
 }
