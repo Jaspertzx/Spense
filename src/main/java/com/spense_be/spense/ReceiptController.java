@@ -18,6 +18,7 @@ import com.spense_be.spense.classes.Receipts;
 import com.spense_be.spense.classes.Server;
 import com.spense_be.spense.classes.Todo;
 import com.spense_be.spense.classes.UserAcc;
+import com.spense_be.spense.classes.Warranty;
 
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,24 +44,46 @@ public class ReceiptController {
         UUID uuid1 = UUID.randomUUID();
         String receipt_id = b.getId() + "-" + uuid1.toString();
         long time = Instant.now().getEpochSecond();
-        this.runDatabaseQuery("INSERT INTO receipts (receiptID, dateissued, price, discount, paymentMethod, staffName, UserID, businessId) VALUES ('" + receipt_id + "', " + time + ", " + r.getPrice() + ", " + r.getDiscount() + ", '" + r.getPaymentMethod() + "', '" + r.getStaffName() + "', " + u.getId() + ", " + b.getId() + ");");
+        this.updateDatabaseQuery("INSERT INTO receipts (receiptID, dateissued, price, discount, paymentMethod, staffName, UserID, businessId) VALUES ('" + receipt_id + "', " + time + ", " + r.getPrice() + ", " + r.getDiscount() + ", '" + r.getPaymentMethod() + "', '" + r.getStaffName() + "', " + u.getId() + ", " + b.getId() + ");");
         Items[] items = r.getItems();
-        String query = "INSERT INTO items (businessid, name, price, receiptId) VALUES ";
+        String query = "INSERT INTO items (businessid, name, iPrice, quantity, receiptId) VALUES ";
         for (int i = 0; i < items.length; i++) {
-            query += "(" + b.getId() + ", '" + items[i].getName() + "', " + items[i].getPrice() + ", '" + receipt_id + "')";
+            query += "(" + b.getId() + ", '" + items[i].getName() + "', " + items[i].getPrice() + ", " + items[i].getQuantity() + ", '" + receipt_id + "')";
             if (i + 1 != items.length) {
                 query += ",";
             }
         }
-        this.runDatabaseQuery(query);
+        this.updateDatabaseQuery(query);
         return "True";
     }
 
     @PostMapping("/getReceipt")
     @ResponseBody
-    public String getReceipt(@RequestBody UserAcc total) throws SQLException {
+    public Receipts getReceipt(@RequestBody Receipts r) throws SQLException {
+        String query = "SELECT r.*, i.*, b.* FROM Receipts r JOIN Items i ON r.receiptID = i.receiptId Join Business b ON r.businessID = b.businessID WHERE r.receiptID =  '" + r.getId() + "'";
+        ResultSet rs = this.runDatabaseQuery(query);        
+        List<Items> itemList = new ArrayList<>();
+        int date = 0;
+        Double price = 0.0;
+        Double discount = 0.0;
+        String paymentMethod = "";
+        Business b = new Business();
+        String staffName = "";
 
-        return "True";
+        while (rs.next()) {
+            date = rs.getInt("dateissued");
+            price = rs.getDouble("price");
+            discount = rs.getDouble("discount");
+            paymentMethod = rs.getString("paymentMethod");
+            b = new Business(rs.getLong("businessId"), rs.getString("businessName"));
+            staffName = rs.getString("staffName");
+            itemList.add(new Items(rs.getString("businessId"), rs.getInt("id"), rs.getString("name"), 
+                    rs.getDouble("iprice"), rs.getInt("quantity")));
+        }
+        Items[] items = new Items[itemList.size()];
+        items = itemList.toArray(items);
+        Receipts receipts = new Receipts(r.getId(), date, items, price, discount, paymentMethod, b, staffName, new Warranty());
+        return receipts;
     }
     
     @PostMapping("/getUserReceipt")

@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Receipts {
 
-    public Receipts(@JsonProperty("id") String id, @JsonProperty("date") int date, @JsonProperty("items") Items[] items, @JsonProperty("price") double price, @JsonProperty("discount") double discount, @JsonProperty("paymentMethod") String paymentMethod, @JsonProperty("business") Business business, @JsonProperty("staffName") String staffName, @JsonProperty("warranty") Warranty warranty) {
+    public Receipts(@JsonProperty("id") String id, @JsonProperty("date") int date, @JsonProperty("items") Items[] items, 
+            @JsonProperty("price") double price, @JsonProperty("discount") double discount, @JsonProperty("paymentMethod") String paymentMethod, 
+            @JsonProperty("business") Business business, @JsonProperty("staffName") String staffName, @JsonProperty("warranty") Warranty warranty) {
         this.id = id;
         this.date = date;
         this.items = items;
@@ -44,6 +46,10 @@ public class Receipts {
 
     public String getId() {
         return this.id;
+    }
+    
+    public int getDate() {
+        return this.date;
     }
 
     public Items[] getItems() {

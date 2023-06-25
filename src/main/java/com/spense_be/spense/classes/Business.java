@@ -1,9 +1,5 @@
 package com.spense_be.spense.classes;
 
-import java.util.Map;
-
-import org.springframework.data.annotation.Id;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Business extends UserAcc {
@@ -19,9 +15,14 @@ public class Business extends UserAcc {
     private String api;
 
     public Business(@JsonProperty("id") Long id, @JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("email") String email, @JsonProperty("mobilePhone") int mobilePhone, @JsonProperty("dateJoined") int dateJoined,
-            @JsonProperty("salt") String salt, @JsonProperty("businessMode") int businessMode, @JsonProperty("outlets") Outlets outlets) {
+            @JsonProperty("salt") String salt, @JsonProperty("businessMode") int businessMode, @JsonProperty("outlets") Outlets outlets, @JsonProperty("businessName") String businessName) {
         super(id, username, password, email, mobilePhone, dateJoined, salt, 1);
         this.outlets = outlets;
+        this.businessName = businessName;
+    }
+
+    public Business() {
+        super();
     }
 
     public Business(Long id, String name) {

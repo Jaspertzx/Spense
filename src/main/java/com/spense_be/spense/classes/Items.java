@@ -1,24 +1,34 @@
 package com.spense_be.spense.classes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Items {
 
-    public Items(String businessID, String ID, String name, Double price) {
+    public Items(@JsonProperty("businessID") String businessID, @JsonProperty("ID") int ID, 
+            @JsonProperty("name") String name, @JsonProperty("iprice") Double iprice, 
+            @JsonProperty("quantity") int quantity) {
         this.businessID = businessID;
         this.ID = ID;
         this.name = name;
-        this.price = price;
+        this.iprice = iprice;
+        this.quantity = quantity;
     }
 
     private String businessID;
-    private String ID;
+    private int ID;
     private String name;
-    private Double price;
+    private Double iprice;
+    private int quantity;
 
     public String getName() {
         return this.name;
     }
 
     public Double getPrice() {
-        return this.price;
+        return this.iprice;
+    }
+
+    public int getQuantity() {
+        return this.quantity;
     }
 }

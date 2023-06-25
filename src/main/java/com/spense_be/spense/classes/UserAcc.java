@@ -10,6 +10,10 @@ public class UserAcc {
     //     this.password = password;
     // }
 
+    public UserAcc(){
+
+    }
+
     public UserAcc(Long id) {
         this.id = id;
     }
