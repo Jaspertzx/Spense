@@ -9,6 +9,10 @@ public class UserAcc {
     //     this.username = username;
     //     this.password = password;
     // }
+
+    public UserAcc(Long id) {
+        this.id = id;
+    }
     
     public UserAcc(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("email") String email, @JsonProperty("mobilePhone") int mobilePhone) {
         this.username = username;

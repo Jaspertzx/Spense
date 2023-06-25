@@ -1,8 +1,10 @@
 package com.spense_be.spense.classes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Receipts {
 
-    public Receipts(String id, int date, Items[] items, double price, double discount, String paymentMethod, Business business, String staffName, Warranty warranty) {
+    public Receipts(@JsonProperty("id") String id, @JsonProperty("date") int date, @JsonProperty("items") Items[] items, @JsonProperty("price") double price, @JsonProperty("discount") double discount, @JsonProperty("paymentMethod") String paymentMethod, @JsonProperty("business") Business business, @JsonProperty("staffName") String staffName, @JsonProperty("warranty") Warranty warranty) {
         this.id = id;
         this.date = date;
         this.items = items;
@@ -12,6 +14,14 @@ public class Receipts {
         this.business = business;
         this.staffName = staffName;
         this.warranty = warranty;
+    }
+
+    public Receipts(String id, int date, double price, String paymentMethod, Business business) {
+        this.id = id;
+        this.date = date;
+        this.price = price;
+        this.paymentMethod = paymentMethod;
+        this.business = business;
     }
 
     private String id;
@@ -32,6 +42,10 @@ public class Receipts {
 
     private Warranty warranty;
 
+    public String getId() {
+        return this.id;
+    }
+
     public Items[] getItems() {
         return this.items;
     }
@@ -50,5 +64,9 @@ public class Receipts {
     
     public String getStaffName() {
         return this.staffName;
+    }
+
+    public String getBusinessName() {
+        return this.business.getBusinessName();
     }
 }

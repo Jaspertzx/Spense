@@ -18,10 +18,15 @@ public class Business extends UserAcc {
 
     private String api;
 
-    public Business(Long id, String username, String password, String email, int mobilePhone, int dateJoined,
-            String salt, int businessMode, Outlets outlets) {
+    public Business(@JsonProperty("id") Long id, @JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("email") String email, @JsonProperty("mobilePhone") int mobilePhone, @JsonProperty("dateJoined") int dateJoined,
+            @JsonProperty("salt") String salt, @JsonProperty("businessMode") int businessMode, @JsonProperty("outlets") Outlets outlets) {
         super(id, username, password, email, mobilePhone, dateJoined, salt, 1);
         this.outlets = outlets;
+    }
+
+    public Business(Long id, String name) {
+        super(id);
+        this.businessName = name;
     }
 
     public String getBusinessName() {
@@ -32,11 +37,6 @@ public class Business extends UserAcc {
     public String unpackNameFromNestedObject() {
         return this.outlets.toString();
     }
-
-    /*
-     * @Override
-     * public String toString() {
-     * return this.outlets.toString();
-     * }
-     */
+    
+    
 }

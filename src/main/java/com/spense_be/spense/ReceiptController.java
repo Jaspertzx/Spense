@@ -56,7 +56,48 @@ public class ReceiptController {
         return "True";
     }
 
-    public void runDatabaseQuery(String queryString) throws SQLException {
+    @PostMapping("/getReceipt")
+    @ResponseBody
+    public String getReceipt(@RequestBody UserAcc total) throws SQLException {
+
+        return "True";
+    }
+    
+    @PostMapping("/getUserReceipt")
+    @ResponseBody
+    public List<Receipts> getUserReceipt(@RequestBody UserAcc u) throws SQLException {
+        System.out.println("yo");
+        String query = "SELECT r.receiptId, r.dateissued, r.price, r.paymentMethod, r.businessId, b.businessName FROM Receipts r JOIN Business b ON r.businessId = b.businessId WHERE r.userId = " + u.getId();
+        ResultSet rs = this.runDatabaseQuery(query);
+        List<Receipts> receiptList = new ArrayList<>();
+        while (rs.next()) {
+            String receiptId = rs.getString("receiptId");
+            int date = rs.getInt("dateissued");
+            Double price = rs.getDouble("price");
+            String paymentMethod = rs.getString("paymentMethod");
+            Business b = new Business(rs.getLong("businessId"), rs.getString("businessName"));
+            System.out.println(rs.getLong("businessId"));
+            Receipts r = new Receipts(receiptId, date, price, paymentMethod, b);
+            receiptList.add(r);
+        }
+        return receiptList;
+    }    
+    
+    public ResultSet runDatabaseQuery(String queryString) throws SQLException {
+        Properties properties = new Properties();
+        try {
+            properties.load(SpenseController.class.getClassLoader().getResourceAsStream("app.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Connection connection = DriverManager.getConnection(properties.getProperty("url"), properties);
+        System.out.println("after connect");
+        PreparedStatement readStatement = connection.prepareStatement(queryString);
+        System.out.println("after read");
+        return readStatement.executeQuery();
+    }
+
+    public void updateDatabaseQuery(String queryString) throws SQLException {
         Properties properties = new Properties();
         try {
             properties.load(SpenseController.class.getClassLoader().getResourceAsStream("app.properties"));
