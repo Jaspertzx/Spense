@@ -61,29 +61,6 @@ public class SpenseUserController {
         return null;
     }
 
-
-    // @PostMapping("/loginRequest")
-    // @ResponseBody
-    // public Boolean loginRequest(@RequestBody UserAcc u)
-    //         throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
-    //     String dbCheck = "SELECT * FROM Users WHERE username ='" + u.getUsername() + "'";
-    //     System.out.println("check1");
-    //     ResultSet rs = runDatabaseQuery(dbCheck);
-    //     System.out.println("check2");
-    //     UserAcc ua = null;
-    //     while (rs.next()) {
-    //         ua = new UserAcc(rs.getLong("id"), rs.getString("username"), rs.getString("password"),
-    //                 rs.getString("email"),
-    //                 rs.getInt("mobilePhone"), rs.getInt("date"), rs.getString("salt"));
-    //         String hp = getHashedPassword(u.retrievePassword(), base64Decode(ua.retrieveSalt()));
-    //         if (ua.checkPassword(hp)) {
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
-
-
     @PostMapping("/signUpRequest" )
     @ResponseBody
     public String signUpRequest(@RequestBody UserAcc ua)

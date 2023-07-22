@@ -17,6 +17,18 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+	    <dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>7.4.0</version> <!-- Replace this version with the latest available version -->
+			<scope>test</scope>
+    	</dependency>
+		<dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
 		<dependency>
 			<groupId>com.azure.spring</groupId>
 			<artifactId>spring-cloud-azure-dependencies</artifactId>
