@@ -7,6 +7,7 @@ public class Business extends UserAcc {
     private String gstRegNo;
 
     private String businessName;
+
     // Ngee Ann City
     private Outlets outlets;
 

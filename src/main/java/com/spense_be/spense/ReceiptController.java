@@ -60,7 +60,7 @@ public class ReceiptController {
     @PostMapping("/getReceipt")
     @ResponseBody
     public Receipts getReceipt(@RequestBody Receipts r) throws SQLException {
-        String query = "SELECT r.*, i.*, b.* FROM Receipts r JOIN Items i ON r.receiptID = i.receiptId Join Business b ON r.businessID = b.businessID WHERE r.receiptID =  '" + r.getId() + "'";
+        String query = "SELECT r.*, i.*, b.* FROM Receipts r JOIN Items i ON r.receiptID = i.receiptId JOIN Business b ON r.businessID = b.businessID WHERE r.receiptID =  '" + r.getId() + "'";
         ResultSet rs = this.runDatabaseQuery(query);        
         List<Items> itemList = new ArrayList<>();
         int date = 0;
@@ -69,6 +69,7 @@ public class ReceiptController {
         String paymentMethod = "";
         Business b = new Business();
         String staffName = "";
+        String category = "";
 
         while (rs.next()) {
             date = rs.getInt("dateissued");
@@ -77,12 +78,14 @@ public class ReceiptController {
             paymentMethod = rs.getString("paymentMethod");
             b = new Business(rs.getLong("businessId"), rs.getString("businessName"));
             staffName = rs.getString("staffName");
+            category = rs.getString("category");
+
             itemList.add(new Items(rs.getString("businessId"), rs.getInt("id"), rs.getString("name"), 
                     rs.getDouble("iprice"), rs.getInt("quantity")));
         }
         Items[] items = new Items[itemList.size()];
         items = itemList.toArray(items);
-        Receipts receipts = new Receipts(r.getId(), date, items, price, discount, paymentMethod, b, staffName, new Warranty());
+        Receipts receipts = new Receipts(r.getId(), date, items, price, discount, paymentMethod, b, staffName, new Warranty(), category);
         return receipts;
     }
     
@@ -90,7 +93,7 @@ public class ReceiptController {
     @ResponseBody
     public List<Receipts> getUserReceipt(@RequestBody UserAcc u) throws SQLException {
         System.out.println("yo");
-        String query = "SELECT r.receiptId, r.dateissued, r.price, r.paymentMethod, r.businessId, b.businessName FROM Receipts r JOIN Business b ON r.businessId = b.businessId WHERE r.userId = " + u.getId();
+        String query = "SELECT r.receiptId, r.dateissued, r.price, r.paymentMethod, r.businessId, r.category, b.businessName FROM Receipts r JOIN Business b ON r.businessId = b.businessId WHERE r.userId = " + u.getId();
         ResultSet rs = this.runDatabaseQuery(query);
         List<Receipts> receiptList = new ArrayList<>();
         while (rs.next()) {
@@ -99,8 +102,9 @@ public class ReceiptController {
             Double price = rs.getDouble("price");
             String paymentMethod = rs.getString("paymentMethod");
             Business b = new Business(rs.getLong("businessId"), rs.getString("businessName"));
+            String category = rs.getString("category");
             System.out.println(rs.getLong("businessId"));
-            Receipts r = new Receipts(receiptId, date, price, paymentMethod, b);
+            Receipts r = new Receipts(receiptId, date, price, paymentMethod, b, category);
             receiptList.add(r);
         }
         return receiptList;

@@ -10,6 +10,7 @@ CREATE TABLE Receipts (
   business INT,
   staffname VARCHAR(512),
   warranty INT
+  category varchar(100),
 );
 
 ALTER TABLE Receipts
