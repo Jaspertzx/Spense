@@ -56,6 +56,4 @@ public class ReceiptTester {
         Assert.assertEquals(receipts.getBusinessName(), "XYZ Mart");
     }
 
-    // Add more test cases as needed to cover other scenarios
-
 }
