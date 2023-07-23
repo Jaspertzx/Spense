@@ -44,7 +44,7 @@ public class ReceiptController {
         UUID uuid1 = UUID.randomUUID();
         String receipt_id = b.getId() + "-" + uuid1.toString();
         long time = Instant.now().getEpochSecond();
-        this.updateDatabaseQuery("INSERT INTO receipts (receiptID, dateissued, price, discount, paymentMethod, staffName, UserID, businessId) VALUES ('" + receipt_id + "', " + time + ", " + r.getPrice() + ", " + r.getDiscount() + ", '" + r.getPaymentMethod() + "', '" + r.getStaffName() + "', " + u.getId() + ", " + b.getId() + ");");
+        this.updateDatabaseQuery("INSERT INTO receipts (receiptID, dateissued, price, discount, paymentMethod, staffName, UserID, businessId, category) VALUES ('" + receipt_id + "', " + time + ", " + r.getPrice() + ", " + r.getDiscount() + ", '" + r.getPaymentMethod() + "', '" + r.getStaffName() + "', " + u.getId() + ", " + b.getId() + ", '" + r.getCategory() + "'" + ");");
         Items[] items = r.getItems();
         String query = "INSERT INTO items (businessid, name, iPrice, quantity, receiptId) VALUES ";
         for (int i = 0; i < items.length; i++) {
